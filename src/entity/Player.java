@@ -123,9 +123,11 @@ public class Player extends Entity{
                     else {
                         gp.ui.showMessage("Not enough Keys!!");
                     }
+                    break;
 
                 case "Chest":
                     gp.ui.gameFinished = true;
+                    break;
 
 
 

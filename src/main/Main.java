@@ -1,23 +1,23 @@
 package main;
-
 import javax.swing.JFrame;
 
-public class Main {
-    public static void main(String[] args) {
 
-        JFrame window = new JFrame();  // to create a window we need to use JFrame
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // this lets window close when clicked "X" mark
+public class main {
+
+    public static void main(String[] args){
+        JFrame window = new JFrame();
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("Sea Of Bones"); // Title in the panel
+        window.setTitle("Sea of Bones");
+        GamePanel gamepanel = new GamePanel();
+        window.add(gamepanel);
 
-        GamePanel gamePanel = new GamePanel();
-        window.add(gamePanel);
+        window.pack(); // To display the Window
 
-        window.pack(); // causes window to fit preferred size given in GamePanel Class
         window.setLocationRelativeTo(null);
-        // since we didn't specify the location of window, it will simply display in center
-        window.setVisible(true); // to see the window
+        window.setVisible(true);
+        gamepanel.setupGame();
+        gamepanel.startGameThread();
 
-        gamePanel.startGameThread();
     }
 }

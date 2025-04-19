@@ -1,98 +1,119 @@
 package main;
 
-import javax.swing.JPanel;
+import entity.Player;
+import object.SuperObject;
+import tile.TileManager;
+
+import javax.swing.*;
 import java.awt.*;
 
-public class GamePanel extends JPanel implements Runnable{
-    // This inherits from JPanel to utilise all functionalities of  JPanel
-    // This works as the game screen so we got to set SETTINGS
+public class GamePanel extends JPanel implements Runnable {
+    //Screen Settings
+    final int originalTileSize = 16;
+    final int scale = 3;
 
-    //SCREEN SETTINGS
-    final int original_tile_size = 16; // 16x16 tile
-    final int scale = 3; //Modify this to increase or decrease the size of everything
-    final int tile_size = original_tile_size * scale; // This will make it 48x48 tile in display
-    final int max_screen_col = 16;
-    final int max_screen_row = 12;
-    final int screen_width = tile_size * max_screen_col; //768 pixels
-    final int screen_height = tile_size * max_screen_row; // 576 pixels
+    int fps = 60;
+    //16*16 is too small for our monitors so scaling is required
 
-    // FPS
-    int FPS = 60;
+    public final int tileSize = originalTileSize * scale; //Single 48 pixel tile
 
-    KeyHandler key_h = new KeyHandler();
-    Thread gameThread; // to create the existence of time in the game by drawing 60 fps
-    // set player's default position
-    int player_x = 100;
-    int player_y = 100;
-    int player_speed = 4;
+    //Screen Size
 
-    public GamePanel() {
-        this.setPreferredSize(new Dimension(screen_width, screen_height));
-        this.setBackground(Color.BLACK);
+    public final int maxScreenCol = 16;
+    public final int maxScreenRow = 12;
+
+    public final int screenWidth = tileSize * maxScreenCol; //768 pixels
+    public final int screenHeight = tileSize * maxScreenRow;//576 pixels
+    //Creating a Clock to keep Game Updating
+    Thread gameThread;
+    TileManager tileM = new TileManager(this);
+
+    public UI ui = new UI(this);
+    KeyHandler keyH = new KeyHandler();
+
+    public CollisionChecker cChecker = new CollisionChecker(this);
+    public AssetSetter aSetter = new AssetSetter(this);
+    public Player player = new Player(this,keyH);
+    public SuperObject obj[] = new SuperObject[10];
+
+
+    //World Setting
+    public final int maxWorldCol = 50;
+    public final int maxWorldRow = 50;
+    public final int worldWidth = tileSize * maxWorldCol;
+    public final int worldHeight = tileSize * maxWorldRow;
+
+
+
+
+    public GamePanel(){
+        this.setPreferredSize(new Dimension(screenWidth,screenHeight));
+        this.setBackground(Color.black);
         this.setDoubleBuffered(true);
-        this.addKeyListener(key_h);
-        this.setFocusable(true); //can be focused to receive input
+        this.addKeyListener(keyH);
+        this.setFocusable(true);
+        player.setDefaultValues();
+        player.getPlayerImage();
+
     }
+
+    public void setupGame(){
+        aSetter.setObject();
+    }
+
 
     public void startGameThread(){
-        gameThread = new Thread(this);
+        gameThread = new Thread(this);// Passing GamePanel Class here
         gameThread.start();
     }
-
     @Override
     public void run() {
-        double draw_interval = (double) 1000000000 / FPS; //0.01666 seconds
+        double drawInterval = 1000000000/fps;
         double delta = 0;
-        long last_time = System.nanoTime();
-        long current_time;
-        long timer = 0;
-        int draw_count = 0;
+        long lastTime = System.nanoTime();
+        long currentTime;
+        while(gameThread != null){
+            currentTime = System.nanoTime();
+            delta += (currentTime - lastTime) / drawInterval;
 
-        while(gameThread != null) {
-            current_time = System.nanoTime();
-            delta += (current_time - last_time) / draw_interval;
-            timer += current_time - last_time;
-            last_time = current_time;
+            lastTime = currentTime;
 
-            if(delta>=1){
+            if(delta >= 1){
                 update();
                 repaint();
                 delta--;
-                draw_count++;
-
-                if(timer >= 1000000000){
-                    System.out.println("FPS: " + draw_count);
-                    draw_count = 0;
-                    timer = 0;
-                }
             }
 
+
+
+
         }
+
+    }
+    public void update(){
+        player.update();
+
     }
 
-    public void update()
-    {
-        if(key_h.up_pressed){
-            player_y -= player_speed;
-        }
-        else if (key_h.down_pressed) {
-            player_y += player_speed;
-        }
-        else if (key_h.left_pressed) {
-            player_x -= player_speed;
-        }
-        else if (key_h.right_pressed) {
-            player_x += player_speed;
-        }
-    }
-
+    //paintComponent is an exisiting Method in Java , With graphics as standard class
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
 
-        g2.setColor(Color.WHITE);
-        g2.fillRect(player_x,player_y,tile_size,tile_size);
+        tileM.draw(g2);
+
+        for(int i = 0 ; i < obj.length; i++){
+            if(obj[i] != null){
+                obj[i].draw(g2,this);
+            }
+        }
+        player.draw(g2);
+
+        ui.draw(g2);
         g2.dispose();
+
     }
+
+
 }

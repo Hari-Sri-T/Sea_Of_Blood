@@ -1,21 +1,22 @@
-package object;
+package object_java;
 
 import main.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class Obj_chest extends SuperObject{
+public class Obj_door extends SuperObject{
     GamePanel gp;
-    public Obj_chest(GamePanel gp){
+    public Obj_door(GamePanel gp){
         this.gp=gp;
-        name="Chest";
+        name="Door";
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("/object/chest.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/object/door.png"));
             uTool.scaleImage(image, gp.tileSize,gp.tileSize);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        collision = true;
     }
 }

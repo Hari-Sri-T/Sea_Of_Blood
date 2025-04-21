@@ -1,8 +1,8 @@
 package main;
 import entity.NPC_Oldman;
-import object.Obj_chest;
-import object.Obj_door;
-import object.Obj_key;
+import object_java.Obj_chest;
+import object_java.Obj_door;
+import object_java.Obj_key;
 
 public class AssetSetter {
     GamePanel gp;

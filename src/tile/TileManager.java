@@ -27,9 +27,9 @@ public class TileManager {
     private void getTileImage() {
 
 
-        setup(0,"grass",false);
-        setup(1,"wall",true);
-        setup(2,"water",true);
+        setup(0,"tiles/grass",false);
+        setup(1,"tiles/wall",true);
+        setup(2,"tiles/water",true);
 
 
 
@@ -38,7 +38,7 @@ public class TileManager {
         UtilityTool uTool = new UtilityTool();
         try{
             tile[index] = new Tile();
-            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/"+imagePath+".png"));
+            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/"+imagePath+".png"));
             tile[index].image = uTool.scaleImage(tile[index].image,gp.tileSize,gp.tileSize);
             tile[index].collision = collision;
         } catch (IOException e) {

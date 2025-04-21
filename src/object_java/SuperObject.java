@@ -1,4 +1,4 @@
-package object;
+package object_java;
 
 import main.GamePanel;
 import main.UtilityTool;

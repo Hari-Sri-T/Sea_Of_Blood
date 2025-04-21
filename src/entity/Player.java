@@ -2,6 +2,7 @@ package entity;
 
 import main.GamePanel;
 import main.KeyHandler;
+import main.UtilityTool;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -10,15 +11,15 @@ import java.io.IOException;
 
 public class Player extends Entity{
 
-    GamePanel gp;
     KeyHandler keyH;
     public final int screenX;
     public final int screenY;
 
-    public int hasKey = 0;
 
     public Player(GamePanel gp,KeyHandler keyH){
-        this.gp = gp;
+
+        super(gp);
+
         this.keyH = keyH;
         screenX = gp.screenWidth/2-(gp.tileSize/2);
         screenY = gp.screenHeight/2-(gp.tileSize/2);
@@ -41,20 +42,17 @@ public class Player extends Entity{
         direction = "down";
     }
     public void getPlayerImage(){
-        try{
-            up1 = ImageIO.read(getClass().getResourceAsStream("/player/c_up_1.png"));
-            up2 = ImageIO.read(getClass().getResourceAsStream("/player/c_up_2.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/player/c_down_1.png"));
-            down2 = ImageIO.read(getClass().getResourceAsStream("/player/c_down_2.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/player/c_right_1.png"));
-            right2 = ImageIO.read(getClass().getResourceAsStream("/player/c_right_2.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/player/c_left_1.png"));
-            left2 = ImageIO.read(getClass().getResourceAsStream("/player/c_left_2.png"));
 
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+        up1 = setup("/player/c_up_1.png");
+        up2 = setup("/player/c_up_2.png");
+        down1 = setup("/player/c_down_1.png");
+        down2 = setup("/player/c_down_2.png");
+        right1 = setup("/player/c_right_1.png");
+        right2 = setup("/player/c_right_2.png");
+        left1 = setup("/player/c_left_1.png");
+        left2 = setup("/player/c_left_2.png");
     }
+
     public void update(){
 
         if(keyH.upPressed == true || keyH.downPressed == true || keyH.leftPressed == true || keyH.rightPressed == true ) {
@@ -80,10 +78,14 @@ public class Player extends Entity{
             collisionOn = false;
             gp.cChecker.checkTile(this);
 
+
             //Check object Collision
             int objIndex = gp.cChecker.checkObject(this,true);
             pickUpObject(objIndex);
 
+            int npcIndex = gp.cChecker.checkEntity(this,gp.npc);
+            interactNPC(npcIndex)
+;
             if(collisionOn == false){
                 switch(direction){
                     case "up":
@@ -106,36 +108,14 @@ public class Player extends Entity{
     public void pickUpObject(int  i){
         if(i != 999){
 
-            String objectName = gp.obj[i].name;
-
-            switch(objectName){
-                case "Key":
-                    hasKey++;
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("You got a Key!!");
-                    break;
-                case "Door":
-                    if(hasKey > 0) {
-                        gp.obj[i] = null;
-                        hasKey--;
-                        gp.ui.showMessage("You opened a Door!!");
-                    }
-                    else {
-                        gp.ui.showMessage("Not enough Keys!!");
-                    }
-                    break;
-
-                case "Chest":
-                    gp.ui.gameFinished = true;
-                    break;
-
-
-
-
-
-            }
         }
 
+    }
+
+    public void interactNPC(int i){
+        if(i != 999){
+
+        }
     }
 
     public void draw(Graphics2D g2){
@@ -176,9 +156,29 @@ public class Player extends Entity{
                 }
                 break;
 
-        };
+        }
+        int x = screenX;
+        int y = screenY;
 
-        g2.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize,null);
+        if(screenX > worldX){
+            x = worldX;
+        }
+        if(screenY > worldY){
+            y = worldY;
+        }
+        int rightOffset = gp.screenWidth - screenX;
+
+        if(rightOffset > gp.worldWidth - worldX){
+            x = gp.screenWidth - (gp.worldWidth - worldX);
+        }
+
+        int bottomOffSet = gp.screenHeight - screenY;
+        if(bottomOffSet > gp.worldHeight - worldY){
+            y = gp.screenHeight - (gp.worldHeight - worldY);
+        }
+
+
+        g2.drawImage(image,x,y,null);
     }
 
 }

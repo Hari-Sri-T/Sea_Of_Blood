@@ -27,6 +27,20 @@ public class MySQLConnection {
         }
     }
 
+    public static boolean userExists(String username) {
+        try (Connection conn = getConnection()) {
+            String query = "SELECT * FROM users WHERE username = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+
     public static boolean registerUser(String username, String password) {
         try (Connection conn = getConnection()) {
             // Check if username already exists

@@ -20,16 +20,16 @@ public class TileManager {
         tile = new Tile[10];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
-        loadMap("/maps/forest.txt");
+        loadMap("/res/maps/forest.txt");
 
     }
 
     private void getTileImage() {
 
 
-        setup(0,"tiles/mud",false);
-        setup(1,"tiles/cement",true);
-        setup(2,"tiles/blood",false);
+        setup(0,"res/tiles/mud",false);
+        setup(1,"res/tiles/cement",true);
+        setup(2,"res/tiles/blood",false);
 
 
 

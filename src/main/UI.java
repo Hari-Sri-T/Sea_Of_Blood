@@ -3,6 +3,9 @@ package main;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
+
+import javax.imageio.ImageIO;
+
 import java.io.InputStream;
 import java.io.IOException;
 
@@ -50,6 +53,11 @@ public class UI {
         g2.setFont(purisaB.deriveFont(Font.PLAIN,35F));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.white);
+
+        // TITLE STATE
+        if(gp.gameState == gp.titleState) {
+            drawTitleScreen();
+        }
         // PLAY STATE
         if(gp.gameState == gp.playState){
 
@@ -63,6 +71,28 @@ public class UI {
             drawDialogueScreen();
         }
 
+    }
+   
+
+    public void drawTitleScreen(){
+         BufferedImage titleBackground = null;
+        try {
+            titleBackground = ImageIO.read(getClass().getResourceAsStream("/res/title/Final Title Screen.png"));
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Draw background
+        if (titleBackground != null) {
+            g2.drawImage(titleBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
+        } else {
+            g2.setColor(Color.BLACK);
+            g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+        }
+
+        // Menu
+  
     }
 
     public void drawPauseScreeen(){

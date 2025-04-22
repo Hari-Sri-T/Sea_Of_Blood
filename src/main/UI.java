@@ -3,6 +3,9 @@ package main;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
+
+import javax.imageio.ImageIO;
+
 import java.io.InputStream;
 import java.io.IOException;
 
@@ -34,6 +37,7 @@ public class UI {
 
     public boolean gameFinished = false;
     public String currentDialogue = "";
+    public int commandNum = 0;
 
     // Password update page fields
     String updateUsername = "";
@@ -77,6 +81,7 @@ public class UI {
         g2.setFont(purisaB.deriveFont(Font.PLAIN,35F));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.white);
+<<<<<<< HEAD
         // LOGIN STATE
         if(gp.gameState == gp.loginState){
             drawLoginScreen();
@@ -84,6 +89,12 @@ public class UI {
         // REGISTER STATE
         else if(gp.gameState == gp.registerState){
             drawRegisterScreen();
+=======
+
+        // TITLE STATE
+        if(gp.gameState == gp.titleState) {
+            drawTitleScreen();
+>>>>>>> c89d38a1e95efda29e2a70ef49f6f7009a5ac5a0
         }
         // PLAY STATE
         else if(gp.gameState == gp.playState){
@@ -102,7 +113,47 @@ public class UI {
             drawUpdatePasswordScreen();
         }
     }
+   
 
+    public void drawTitleScreen() {
+        BufferedImage titleBackground = null;
+        try {
+            titleBackground = ImageIO.read(getClass().getResourceAsStream("/res/title/Final Title Screen.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+        // Draw background
+        if (titleBackground != null) {
+            g2.drawImage(titleBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
+        } else {
+            g2.setColor(Color.BLACK);
+            g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
+        }
+    
+       
+        int x ;
+        int y = gp.tileSize * 6;
+       
+    
+        // Menu Options
+        g2.setFont(maruMonica.deriveFont(Font.BOLD, 40F));
+    
+        String[] options = {"Play", "Exit"};
+        y += gp.tileSize * 2;
+    
+        for (int i = 0; i < options.length; i++) {
+            x = getXforCentredText(options[i]);
+            if (i == commandNum) {
+                g2.setColor(Color.RED);
+            } else {
+                g2.setColor(Color.WHITE);
+            }
+            g2.drawString(options[i], x, y + i * 50);
+        }
+    }
+    
+    
     public void drawPauseScreeen(){
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,80F));
         String text = "PAUSED";

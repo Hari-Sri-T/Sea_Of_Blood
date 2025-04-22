@@ -37,11 +37,18 @@ public class GamePanel extends JPanel implements Runnable {
     public Player player = new Player(this,keyH);
     public SuperObject obj[] = new SuperObject[10];
     public Entity[] npc = new Entity[10];
+    public Entity[] enemy = new Entity[10]; // Add this line
+
+
 
     //Game State
     public int gameState;
+<<<<<<< HEAD
     public final int loginState = 0;
     public final int registerState = 4;
+=======
+    public final int titleState = 0;
+>>>>>>> c89d38a1e95efda29e2a70ef49f6f7009a5ac5a0
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
@@ -68,6 +75,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
         player.setDefaultValues();
         player.getPlayerImage();
+        this.requestFocusInWindow();
+
 
     }
 
@@ -75,7 +84,12 @@ public class GamePanel extends JPanel implements Runnable {
 
         aSetter.setObject();
         aSetter.setNPC();
+<<<<<<< HEAD
         gameState = loginState;
+=======
+        aSetter.setEnemy();
+        gameState = titleState;
+>>>>>>> c89d38a1e95efda29e2a70ef49f6f7009a5ac5a0
     }
 
 
@@ -117,6 +131,11 @@ public class GamePanel extends JPanel implements Runnable {
                     npc[i].update();
                 }
             }
+            for(int i = 0; i < enemy.length; i++){
+                if(enemy[i] != null){
+                    enemy[i].update();
+                }
+            }
 
         }
 
@@ -132,23 +151,39 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D) g;
 
-        tileM.draw(g2);
-
-        for(int i = 0 ; i < obj.length; i++){
-            if(obj[i] != null){
-                obj[i].draw(g2,this);
-            }
+        if(gameState == titleState) {
+            ui.draw(g2);
         }
-        //NPC
-        for(int i = 0; i<npc.length; i++){
-            if(npc[i] != null){
-                npc[i].draw(g2);
-            }
-        }
-        player.draw(g2);
 
-        ui.draw(g2);
-        g2.dispose();
+        else {
+            tileM.draw(g2);
+
+            for(int i = 0 ; i < obj.length; i++){
+                if(obj[i] != null){
+                    obj[i].draw(g2,this);
+                }
+            }
+            //NPC
+            for(int i = 0; i<npc.length; i++){
+                if(npc[i] != null){
+                    npc[i].draw(g2);
+                }
+            }
+            // Draw Enemies
+            for (int i = 0; i < enemy.length; i++) {
+                if (enemy[i] != null) {
+                    enemy[i].draw(g2);
+                }
+            }
+
+            player.draw(g2);
+    
+            ui.draw(g2);
+
+
+        }
+
+
 
     }
 

@@ -6,7 +6,7 @@ import java.sql.*;
 public class MySQLConnection {
     private static final String DB_URL = "jdbc:mysql://localhost:3306/sea_of_blood";
     private static final String DB_USER = "root";
-    private static final String DB_PASS = "Sahil@02022005"; // Change to your MySQL root password
+    private static final String DB_PASS = "HariSai#@135"; // Change to your MySQL root password
 
     private static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);

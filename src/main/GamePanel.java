@@ -87,7 +87,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void startGameThread(){
         gameThread = new Thread(this);// Passing GamePanel Class here
         gameThread.start();
-        bgMusic.setFile("/res/audio/background(1).wav");  // Adjust path
+        bgMusic.setFile("src\\res\\audio\\background (1).wav");  // Adjust path
         bgMusic.playLoop();
 
     }

@@ -2,10 +2,9 @@ package main;
 
 import javax.sound.sampled.*;
 import java.io.File;
-import java.io.IOException;
 
 public class Sound {
-    Clip clip;
+    public Clip clip;
 
     public void setFile(String filePath) {
         try {
@@ -20,8 +19,8 @@ public class Sound {
 
     public void playLoop() {
         if (clip != null) {
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-            clip.start();
+            clip.setFramePosition(0); // Reset to beginning
+            clip.loop(Clip.LOOP_CONTINUOUSLY); // This starts the loop
         }
     }
 
@@ -31,5 +30,4 @@ public class Sound {
         }
     }
 }
-
 

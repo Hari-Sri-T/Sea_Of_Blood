@@ -12,7 +12,8 @@ public class GamePanel extends JPanel implements Runnable {
     //Screen Settings
     final int originalTileSize = 16;
     final int scale = 3;
-
+    
+    Sound bgMusic = new Sound();
     int fps = 60;
     //16*16 is too small for our monitors so scaling is required
 
@@ -43,16 +44,11 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Game State
     public int gameState;
-<<<<<<< HEAD
-    public final int loginState = 0;
-    public final int registerState = 4;
-=======
+
     public final int titleState = 0;
->>>>>>> c89d38a1e95efda29e2a70ef49f6f7009a5ac5a0
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
-    public final int updatePasswordState = 5;
 
 
     //World Setting
@@ -71,7 +67,6 @@ public class GamePanel extends JPanel implements Runnable {
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
-        this.addMouseListener(keyH);
         this.setFocusable(true);
         player.setDefaultValues();
         player.getPlayerImage();
@@ -84,18 +79,17 @@ public class GamePanel extends JPanel implements Runnable {
 
         aSetter.setObject();
         aSetter.setNPC();
-<<<<<<< HEAD
-        gameState = loginState;
-=======
         aSetter.setEnemy();
         gameState = titleState;
->>>>>>> c89d38a1e95efda29e2a70ef49f6f7009a5ac5a0
     }
 
 
     public void startGameThread(){
         gameThread = new Thread(this);// Passing GamePanel Class here
         gameThread.start();
+        bgMusic.setFile("/res/audio/background(1).wav");  // Adjust path
+        bgMusic.playLoop();
+
     }
     @Override
     public void run() {

@@ -24,6 +24,7 @@ public class UI {
 
     public boolean gameFinished = false;
     public String currentDialogue = "";
+    public int commandNum = 0;
 
 
 
@@ -74,15 +75,14 @@ public class UI {
     }
    
 
-    public void drawTitleScreen(){
-         BufferedImage titleBackground = null;
+    public void drawTitleScreen() {
+        BufferedImage titleBackground = null;
         try {
             titleBackground = ImageIO.read(getClass().getResourceAsStream("/res/title/Final Title Screen.png"));
-            
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+    
         // Draw background
         if (titleBackground != null) {
             g2.drawImage(titleBackground, 0, 0, gp.screenWidth, gp.screenHeight, null);
@@ -90,11 +90,30 @@ public class UI {
             g2.setColor(Color.BLACK);
             g2.fillRect(0, 0, gp.screenWidth, gp.screenHeight);
         }
-
-        // Menu
-  
+    
+       
+        int x ;
+        int y = gp.tileSize * 6;
+       
+    
+        // Menu Options
+        g2.setFont(maruMonica.deriveFont(Font.BOLD, 40F));
+    
+        String[] options = {"Play", "Exit"};
+        y += gp.tileSize * 2;
+    
+        for (int i = 0; i < options.length; i++) {
+            x = getXforCentredText(options[i]);
+            if (i == commandNum) {
+                g2.setColor(Color.RED);
+            } else {
+                g2.setColor(Color.WHITE);
+            }
+            g2.drawString(options[i], x, y + i * 50);
+        }
     }
-
+    
+    
     public void drawPauseScreeen(){
         g2.setFont(g2.getFont().deriveFont(Font.BOLD,80F));
         String text = "PAUSED";

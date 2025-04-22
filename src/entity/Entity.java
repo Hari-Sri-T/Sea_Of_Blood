@@ -20,6 +20,9 @@ public class Entity {
     public BufferedImage left2;
     public BufferedImage right1;
     public BufferedImage right2;
+    // Equipped sword sprites
+BufferedImage e_up1, e_up2, e_down1, e_down2, e_left1, e_left2, e_right1, e_right2;
+
     public String direction;
 
     public int spriteCounter = 0;

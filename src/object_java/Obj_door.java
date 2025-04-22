@@ -11,7 +11,7 @@ public class Obj_door extends SuperObject{
         this.gp=gp;
         name="Door";
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("/object/door.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/res/object/door.png"));
             uTool.scaleImage(image, gp.tileSize,gp.tileSize);
 
         } catch (IOException e) {

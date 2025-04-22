@@ -5,17 +5,18 @@ import main.GamePanel;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
-public class Obj_chest extends SuperObject{
+public class Obj_sword extends SuperObject{
     GamePanel gp;
-    public Obj_chest(GamePanel gp){
+    public Obj_sword(GamePanel gp){
         this.gp=gp;
-        name="Chest";
+        name="Sword";
         try{
-            image = ImageIO.read(getClass().getResourceAsStream("/res/object/chest.png"));
+            image = ImageIO.read(getClass().getResourceAsStream("/res/object/Sword.png"));
             uTool.scaleImage(image, gp.tileSize,gp.tileSize);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+        collision = true;
     }
 }

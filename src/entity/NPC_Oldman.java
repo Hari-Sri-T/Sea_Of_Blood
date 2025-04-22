@@ -19,14 +19,14 @@ public class NPC_Oldman extends Entity{
     }
     public void getImage(){
 
-        up1 = setup("/npc/oldman_up_1.png");
-        up2 = setup("/npc/oldman_up_2.png");
-        down1 = setup("/npc/oldman_down_1.png");
-        down2 = setup("/npc/oldman_down_2.png");
-        right1 = setup("/npc/oldman_right_1.png");
-        right2 = setup("/npc/oldman_right_2.png");
-        left1 = setup("/npc/oldman_left_1.png");
-        left2 = setup("/npc/oldman_left_2.png");
+        up1 = setup("/res/npc/oldman_up_1.png");
+        up2 = setup("/res/npc/oldman_up_2.png");
+        down1 = setup("/res/npc/oldman_down_1.png");
+        down2 = setup("/res/npc/oldman_down_2.png");
+        right1 = setup("/res/npc/oldman_right_1.png");
+        right2 = setup("/res/npc/oldman_right_2.png");
+        left1 = setup("/res/npc/oldman_left_1.png");
+        left2 = setup("/res/npc/oldman_left_2.png");
     }
     public void setDialogue(){
         dialogues[0] = "Hello lad are u also\n stuck in this maze?";

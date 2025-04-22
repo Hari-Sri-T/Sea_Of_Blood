@@ -40,9 +40,12 @@ public class GamePanel extends JPanel implements Runnable {
 
     //Game State
     public int gameState;
+    public final int loginState = 0;
+    public final int registerState = 4;
     public final int playState = 1;
     public final int pauseState = 2;
     public final int dialogueState = 3;
+    public final int updatePasswordState = 5;
 
 
     //World Setting
@@ -61,6 +64,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
+        this.addMouseListener(keyH);
         this.setFocusable(true);
         player.setDefaultValues();
         player.getPlayerImage();
@@ -71,7 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         aSetter.setObject();
         aSetter.setNPC();
-        gameState = playState;
+        gameState = loginState;
     }
 
 
